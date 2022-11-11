@@ -17,8 +17,10 @@ steps:
         namespace: {{ .Component.Namespace }}
       resource:
         name: {{ .Resource }}
+        {{ with .Component.Reference  }}
         referencePath:
-          name: {{ .Component.Reference }}
+          name: {{ . }}
+        {{ end }}
       snapshotTemplate:
         name: {{ .Parameters.Name }}
         tag: latest
@@ -36,13 +38,15 @@ steps:
         name: {{ .Parameters.Name }}
         namespace: {{ .Component.Namespace }}
       configRef:
-        componentRef:
+        componentVersionRef:
           name: {{ .Component.Name }}
           namespace: {{ .Component.Namespace }}
         resource:
           name: config
+          {{ with .Component.Reference  }}
           referencePath:
-            name: {{ .Component.Reference }}
+            name: {{ . }}
+          {{ end }}
       snapshotTemplate:
         name: {{ .Parameters.Name }}-localized
         tag: latest
@@ -60,7 +64,7 @@ steps:
         name: {{ .Parameters.Name }}-localized
         namespace: {{ .Component.Namespace }}
       configRef:
-        componentRef:
+        componentVersionRef:
           name: {{ .Component.Name }}
           namespace: {{ .Component.Namespace }}
         resource:
